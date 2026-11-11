@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Afete Hazır mıyız?</title>
+<meta name="description" content="Asiye Ağaoğlu Anadolu Lisesi Afet Hazırlık Kulübü: deprem, yangın, sel ve çığ için küçük oyunlar ve kendini ölçebileceğin afete hazırlık testi.">
+<meta name="theme-color" content="#ff7a2f">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Afete Hazır mıyız?">
+<meta property="og:description" content="Oyunlarla öğren, sonunda kendini test et. Asiye Ağaoğlu Anadolu Lisesi Afet Hazırlık Kulübü.">
+<link rel="icon" href="logo.png">
+<style>
+:root{
+  --bg:#ffffff; --ink:#2b2a33; --muted:#6b6877; --primary:#ff7a2f; --primary-d:#e2611a;
+  --teal:#1fa39a; --teal-d:#168178; --good:#2f9e5b; --bad:#d9475a; --cream:#fff7ec; --line:#f3e3cc; --radius:1.2rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:clamp(16px,1.1vw + 4px,22px)}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.1rem}
+section{scroll-margin-top:5.5rem}
+
+/* Üst bar */
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:2px solid var(--line)}
+.bar{display:flex;align-items:center;gap:.8rem;padding:.55rem 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:700;margin-right:auto;line-height:1.2}
+.brand img,.logo-ph{width:2.8rem;height:2.8rem;border-radius:50%;object-fit:contain;background:#fff;border:2px solid var(--line)}
+.logo-ph{display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--muted)}
+.brand small{display:block;font-weight:500;color:var(--muted)}
+nav{display:flex;gap:.3rem;overflow-x:auto;max-width:100%}
+nav a{text-decoration:none;color:var(--ink);padding:.35rem .75rem;border-radius:999px;font-size:.9rem;font-weight:600;white-space:nowrap}
+nav a:hover{background:var(--cream)}
+
+/* Butonlar */
+.btn{display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:700;padding:.7rem 1.3rem;border-radius:999px;background:var(--primary);color:#fff;text-decoration:none;box-shadow:0 .25rem 0 var(--primary-d);transition:transform .1s,box-shadow .1s}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(.2rem);box-shadow:0 .05rem 0 var(--primary-d)}
+.btn.alt{background:var(--teal);box-shadow:0 .25rem 0 var(--teal-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.big{font-size:1.2rem;padding:.9rem 2rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.done{background:var(--good);box-shadow:0 .25rem 0 #237a44;opacity:1}
+.btn.shake{animation:nope .45s}
+@keyframes nope{0%,100%{transform:translateX(0)}20%{transform:translateX(-.5rem)}40%{transform:translateX(.5rem)}60%{transform:translateX(-.35rem)}80%{transform:translateX(.35rem)}}
+
+/* Giriş */
+.hero{padding:2.2rem 0 1rem;text-align:center}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);margin:0 0 .3rem;line-height:1.15}
+.hero h1 span{color:var(--primary)}
+.hero .sub{color:var(--muted);margin:0 0 1.2rem}
+.chips{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.1rem 0}
+.chips span{background:var(--cream);border:2px solid var(--line);border-radius:999px;padding:.25rem .8rem;font-weight:600;font-size:.9rem}
+
+/* Bölümler */
+.section{background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin:1.6rem 0;box-shadow:0 .4rem 0 var(--cream)}
+.section h2{margin:0 0 .3rem;font-size:1.6rem}
+.lead{color:var(--muted);margin:0 0 1rem}
+
+/* Rehber (Afet Abi) */
+.guide{display:flex;align-items:flex-end;gap:.7rem;margin-top:1.1rem}
+.guide.big{max-width:46rem;margin:1rem auto;text-align:left}
+.mascot{flex:0 0 auto;width:5.4rem;animation:bob 3s ease-in-out infinite}
+.guide.big .mascot{width:8.5rem}
+.mascot svg{display:block;width:100%;height:auto;overflow:visible}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-.3rem)}}
+.bubble{position:relative;flex:1;background:var(--cream);border:2px solid var(--line);border-radius:1.1rem;padding:.8rem 1rem;min-height:3.4rem}
+.bubble::before{content:"";position:absolute;left:-.6rem;bottom:1.1rem;width:1rem;height:1rem;background:var(--cream);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.bubble.pop{animation:pop .35s}
+@keyframes pop{from{transform:scale(.94);opacity:.4}to{transform:scale(1);opacity:1}}
+.m{display:none}
+.guide[data-mood="happy"] .m-happy,.guide[data-mood="cheer"] .m-cheer,.guide[data-mood="scared"] .m-scared,.guide[data-mood="oops"] .m-oops{display:inline}
+.guide[data-mood="scared"] .mascot{animation:trem .13s infinite}
+.guide[data-mood="cheer"] .mascot{animation:hop .55s ease 3}
+@keyframes trem{0%,100%{transform:translateX(-.15rem) rotate(-2deg)}50%{transform:translateX(.15rem) rotate(2deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-.9rem)}}
+
+/* Çanta oyunu */
+.bag-layout{display:grid;grid-template-columns:14rem 1fr;gap:1.2rem;align-items:start}
+.bag-box{position:sticky;top:calc(var(--hdr,5rem) + .6rem);z-index:6;text-align:center;background:var(--cream);border:2px dashed #f0c58f;border-radius:1.1rem;padding:.8rem;transition:background .15s,border-color .15s,transform .15s}
+.bag-box.over{background:#ffe9cc;border-color:var(--primary);transform:scale(1.03)}
+.bag{width:7rem;margin:0 auto}
+.bag svg{display:block;width:100%;height:auto}
+.bag.bump{animation:bump .5s}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.25) rotate(-6deg)}70%{transform:scale(.95) rotate(4deg)}100%{transform:scale(1)}}
+.bag-hint{font-size:.8rem;color:var(--muted)}
+.bag-count{font-weight:700;margin:.2rem 0}
+.bag-items{display:flex;flex-wrap:wrap;gap:.15rem;justify-content:center;min-height:2.2rem}
+.bag-items .mini{width:2rem;height:2rem;animation:pop .4s}
+.bag-items .mini svg{width:100%;height:100%;display:block}
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.4rem,1fr));gap:.6rem}
+.item{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.6rem .4rem;border:2px solid var(--line);background:#fff;border-radius:1rem;cursor:grab;font-size:.85rem;font-weight:600;color:var(--ink);text-align:center;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s,border-color .12s}
+.item:hover{transform:translateY(-.2rem);border-color:var(--primary)}
+.item:focus-visible{outline:3px solid var(--teal)}
+.item .ic{width:4.8rem;height:4.8rem;pointer-events:none}
+.item .ic svg{width:100%;height:100%;display:block}
+.item.dragging{opacity:.35}
+.item.in{background:#e4f6ea;border-color:var(--good);opacity:.6;cursor:default;transform:none}
+.item.out{background:#fde8eb;border-color:var(--bad);opacity:.6;cursor:default;transform:none;animation:nope .45s}
+.ghost{position:fixed;left:0;top:0;width:4.6rem;height:4.6rem;z-index:100;pointer-events:none;filter:drop-shadow(0 .4rem .4rem rgba(0,0,0,.25));transform:translate(-200px,-200px);will-change:transform}
+.ghost svg{width:100%;height:100%;display:block}
+@media(max-width:720px){
+  .bag-layout{grid-template-columns:1fr}
+  .bag-box{display:grid;grid-template-columns:4.2rem 1fr;gap:0 .8rem;align-items:center;text-align:left;padding:.5rem .7rem}
+  .bag{width:4.2rem;grid-row:1 / span 3}
+  .bag-items{justify-content:flex-start}
+  .bag-items .mini{width:1.6rem;height:1.6rem}
+}
+
+/* Sahne (deprem) */
+.stage{contain:layout paint;border-radius:1.1rem;overflow:hidden;border:2px solid var(--line);position:relative;background:#fdebd0}
+.stage svg{display:block;width:100%;height:auto}
+.stage.quake svg{animation:quake .22s infinite;will-change:transform}
+@keyframes quake{0%{transform:translate(0,0)}25%{transform:translate(-5px,3px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-3px,-2px)}100%{transform:translate(0,0)}}
+.stage.quake #lamp{animation:swing .5s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+#lamp{transform-origin:210px 0}
+.banner{position:absolute;top:.6rem;left:50%;transform:translateX(-50%);background:var(--bad);color:#fff;font-weight:800;padding:.3rem 1.1rem;border-radius:999px;animation:blink .5s infinite alternate;letter-spacing:.06rem;z-index:2}
+@keyframes blink{from{opacity:1}to{opacity:.55}}
+#figure{transition:transform .9s ease}
+#figure[data-pose="cover"],#figure[data-pose="hold"]{transform:translateX(190px)}
+.pose{display:none}
+#figure[data-pose="stand"] .p-stand,#figure[data-pose="crouch"] .p-crouch,#figure[data-pose="cover"] .p-cover,#figure[data-pose="hold"] .p-hold{display:inline}
+.stage:not(.quake) .f-scared{display:none}
+.stage.quake .f-calm{display:none}
+.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
+.choices .btn{font-size:1rem}
+.ctrl{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+
+/* Adım adım "bu mu şu mu" soruları (çığ) */
+.qa{flex:1 1 100%;background:var(--cream);border:2px solid var(--line);border-radius:1.1rem;padding:1rem}
+.qa-meta{font-size:.85rem;font-weight:700;color:var(--teal-d);margin-bottom:.2rem}
+.qa-q{font-size:1.15rem;font-weight:700;margin:0 0 .8rem}
+.qa-opts{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.qa-opts .btn{font-size:1rem;line-height:1.35;padding:.8rem 1rem;border-radius:1.1rem;text-align:center}
+@media(max-width:560px){.qa-opts{grid-template-columns:1fr}}
+
+/* Yangın sahnesi */
+.fire-scene{container-type:inline-size;contain:paint;position:relative;height:11.5rem;border-radius:1.1rem;overflow:hidden;border:2px solid var(--line);background:linear-gradient(#ffe0b8,#fff4e3)}
+.fs-ground{position:absolute;left:0;right:0;bottom:0;height:2.4rem;background:#cfe8b8}
+.fs-bld{position:absolute;left:7%;bottom:2rem;font-size:5.5rem;line-height:1}
+.fs-fire{position:absolute;left:9%;bottom:4.2rem;font-size:3rem;line-height:1;transform-origin:50% 100%;opacity:0}
+.fs-smoke{position:absolute;left:15%;top:.3rem;font-size:2.4rem;opacity:0}
+.fire-scene.on .fs-fire{opacity:1;animation:flick .4s infinite alternate}
+.fire-scene.on .fs-smoke{opacity:.9;animation:rise 2.4s infinite}
+@keyframes flick{from{transform:scale(1) rotate(-4deg)}to{transform:scale(1.2,1.12) rotate(4deg)}}
+@keyframes rise{0%{transform:translate(0,.6rem);opacity:0}30%{opacity:.9}100%{transform:translate(1.2rem,-.8rem);opacity:0}}
+.fs-runner{position:absolute;bottom:.9rem;left:calc(var(--x,30)*1%);width:3rem;transition:left .9s ease}
+.fs-runner svg{display:block;width:100%;height:auto}
+.fs-goal{position:absolute;right:4%;bottom:.3rem;font-size:.85rem;font-weight:700;background:#fff;border:2px solid var(--line);border-radius:.8rem;padding:.1rem .5rem}
+.fs-truck{position:absolute;bottom:2.2rem;right:-5rem;font-size:3rem;line-height:1;opacity:0}
+.fire-scene.done .fs-fire,.fire-scene.done .fs-smoke{opacity:0;animation:none}
+.fire-scene.done .fs-truck{opacity:1;animation:drive 1.4s ease forwards}
+@keyframes drive{from{right:-5rem}to{right:22%}}
+
+/* Çığ sahnesi */
+.av-scene{container-type:inline-size;contain:paint;position:relative;height:12rem;border-radius:1.1rem;overflow:hidden;border:2px solid var(--line);background:linear-gradient(#8ec9ec,#dff1fc)}
+.av-mtn{position:absolute;left:2%;top:-.2rem;font-size:9.5rem;line-height:1}
+.av-tree{position:absolute;bottom:2.1rem;font-size:2rem;line-height:1}
+.av-ground{position:absolute;left:0;right:0;bottom:0;height:2.6rem;background:#fff;border-top:3px solid #dbe9f2}
+.av-runner{position:absolute;bottom:.9rem;left:calc(var(--x,48)*1%);width:3rem;transition:left .9s ease}
+.av-runner svg{display:block;width:100%;height:auto}
+.av-wave{position:absolute;left:-16rem;top:1.2rem;width:15rem;height:9.5rem;opacity:0;background:radial-gradient(ellipse closest-side at 50% 50%,#fff 45%,#e6f2fb 70%,rgba(200,226,244,0) 100%)}
+.av-wave::after{content:"❄️ 💨 ❄️";position:absolute;left:26%;top:36%;font-size:1.9rem;letter-spacing:.2rem}
+.av-scene.on .av-wave{opacity:1;animation:roll 2.6s ease-in forwards}
+@keyframes roll{from{left:-16rem}to{left:26%}}
+.av-heli{position:absolute;top:.6rem;right:-4rem;font-size:2.6rem;line-height:1;opacity:0}
+.av-scene.done .av-wave{animation:none;left:26%;opacity:.4}
+.av-scene.done .av-heli{opacity:1;animation:fly 1.6s ease forwards}
+@keyframes fly{from{right:-4rem}to{right:18%}}
+@supports (width:1cqw){
+  .fs-runner{left:0;transform:translateX(calc(var(--x,30)*1cqw));transition:transform .9s ease}
+  .av-runner{left:0;transform:translateX(calc(var(--x,48)*1cqw));transition:transform .9s ease}
+  .fs-truck{right:0;transform:translateX(5rem)}
+  @keyframes drive{from{transform:translateX(5rem)}to{transform:translateX(-22cqw)}}
+  .av-heli{right:0;transform:translateX(4rem)}
+  @keyframes fly{from{transform:translateX(4rem)}to{transform:translateX(-18cqw)}}
+  .av-wave{left:0;transform:translateX(-16rem)}
+  @keyframes roll{from{transform:translateX(-16rem)}to{transform:translateX(26cqw)}}
+  .av-scene.done .av-wave{left:0;transform:translateX(26cqw)}
+}
+
+/* Sel oyunu */
+.flood-top{contain:layout paint;position:relative;height:4.4rem;border-radius:1.1rem;overflow:hidden;background:linear-gradient(#cfe8ff,#eaf5ff);border:2px solid var(--line)}
+.flood-top .rain{position:absolute;top:.2rem;left:0;right:0;text-align:center;font-size:1.8rem;animation:float 3s ease-in-out infinite}
+.flood-top .waves{position:absolute;bottom:-.2rem;left:-10%;width:130%;font-size:2rem;white-space:nowrap;animation:wave 3s ease-in-out infinite alternate;letter-spacing:.2rem}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(.3rem)}}
+@keyframes wave{from{transform:translateX(0)}to{transform:translateX(5%)}}
+.s-card{margin-top:1rem;text-align:center;padding:1.2rem;border:2px solid var(--line);border-radius:1.1rem;background:#fff}
+.s-card .em{font-size:3.2rem;line-height:1}
+.s-card p{font-size:1.2rem;font-weight:700;margin:.6rem 0 1rem}
+.s-card .row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+.btn.safe{background:var(--good);box-shadow:0 .25rem 0 #237a44}
+.btn.danger{background:var(--bad);box-shadow:0 .25rem 0 #a9323f}
+.s-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-top:.8rem}
+
+/* Test */
+.progress{height:.7rem;border-radius:999px;background:var(--line);overflow:hidden;margin:1rem 0}
+.progress i{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+.q-text{font-size:1.2rem;font-weight:700;margin:0 0 .8rem}
+.opts{display:grid;gap:.6rem}
+.opt{text-align:left;font:inherit;padding:.85rem 1rem;border-radius:.9rem;border:2px solid var(--line);background:#fff;cursor:pointer;transition:border-color .12s,transform .12s}
+.opt:hover{border-color:var(--teal);transform:translateX(.2rem)}
+.result{text-align:center}
+.score{font-size:3.6rem;font-weight:800;color:var(--primary);line-height:1}
+.level{font-size:1.5rem;font-weight:800;margin:.3rem 0}
+.tips{text-align:left;background:var(--cream);border-radius:.9rem;padding:.8rem 1rem .8rem 2rem;margin:1rem 0}
+.tips li{margin:.4rem 0}
+
+footer{margin:2.5rem 0 2rem;padding-top:1.2rem;border-top:2px solid var(--line);text-align:center;color:var(--muted);font-size:.9rem}
+footer .brand{justify-content:center;margin:0 0 .8rem;color:var(--ink);gap:1rem;text-align:left}
+footer .brand img,footer .brand .logo-ph{width:5.5rem;height:5.5rem;border:0;background:transparent}
+footer .brand .fname{font-size:1.35rem;font-weight:800;line-height:1.25}
+footer .brand .fname small{font-size:1.1rem;font-weight:700;color:var(--primary);margin-top:.1rem}
+@media(max-width:560px){footer .brand img,footer .brand .logo-ph{width:4.2rem;height:4.2rem}footer .brand .fname{font-size:1.1rem}footer .brand .fname small{font-size:1rem}}
+[hidden]{display:none!important}
+.off,.off *{animation-play-state:paused!important}
+.btn,.opt,nav a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <!-- Okul logosunu "logo.png" adıyla bu dosyanın yanına koyunca burada görünür -->
+      <img src="logo.png" width="44" height="44" decoding="async" alt="Okul logosu" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-ph',textContent:'LOGO'}))">
+      <div><span data-okul>Okul Adı</span><small data-kulup>Afet Kulübü</small></div>
+    </div>
+    <nav>
+      <a href="#canta">🎒 Çanta</a>
+      <a href="#deprem">🏠 Deprem</a>
+      <a href="#yangin">🔥 Yangın</a>
+      <a href="#sel">🌊 Sel</a>
+      <a href="#cig">🏔️ Çığ</a>
+      <a href="#test">📝 Test</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- KARŞILAMA -->
+  <section class="hero" id="giris">
+    <h1>Afete <span>hazır</span> mıyız?</h1>
+    <p class="sub">Oyunlarla öğren, sonunda kendini test et.</p>
+    <div class="guide big" id="guideHero" data-mood="cheer"></div>
+    <div class="chips"><span>🎒 Afet çantası</span><span>🏠 Deprem</span><span>🔥 Yangın</span><span>🌊 Sel</span><span>🏔️ Çığ</span><span>📝 Test</span></div>
+    <a class="btn big" href="#canta" id="startBtn">Başla 🚀</a>
+  </section>
+
+  <!-- OYUN 1: ÇANTA -->
+  <section class="section" id="canta">
+    <h2>🎒 Oyun 1: Afet çantanı hazırla</h2>
+    <p class="lead">Eşyaları sürükleyip çantaya bırak. Telefonda bir eşyaya biraz basılı tutup sürükle (ya da eşyaya kısaca dokun). Doğrular çantada kalır, yanlışlar geri sıçrar.</p>
+    <div class="bag-layout">
+      <div class="bag-box" id="bagBox">
+        <div id="bag" class="bag"></div>
+        <div class="bag-hint">Eşyayı buraya sürükle</div>
+        <div id="bagCount" class="bag-count">0 / 0</div>
+        <div id="bagItems" class="bag-items"></div>
+      </div>
+      <div id="itemGrid" class="item-grid"></div>
+    </div>
+    <div class="guide" id="guide1" data-mood="happy"></div>
+    <div class="ctrl"><button class="btn ghost" id="bagReset" type="button">Yeniden başla</button></div>
+  </section>
+
+  <!-- OYUN 2: DEPREM -->
+  <section class="section" id="deprem">
+    <h2>🏠 Oyun 2: Deprem anı</h2>
+    <p class="lead">Depremi başlat. Afet Abi korkacak, ona doğru hareketleri doğru sırayla yaptır. Dikkat, bazı butonlar tuzak!</p>
+    <div class="stage" id="stage">
+      <div class="banner" id="banner" hidden>DEPREM!</div>
+      <svg viewBox="0 0 420 290" role="img" aria-label="Odada baretli ve yelekli bir figür ve bir masa">
+        <defs>
+          <g id="hat">
+            <path d="M-22 -3 Q-22 -27 0 -27 Q22 -27 22 -3 Z" fill="#ffd23f"/>
+            <rect x="-26" y="-6" width="52" height="7" rx="3.5" fill="#f2b705"/>
+            <rect x="-4.5" y="-28" width="9" height="23" rx="3" fill="#f2b705"/>
+          </g>
+          <g id="headCalm">
+            <circle cx="-20" cy="3" r="4" fill="#f5c9a1"/><circle cx="20" cy="3" r="4" fill="#f5c9a1"/>
+            <circle r="20" fill="#f5c9a1"/>
+            <circle cx="-7" cy="5" r="2.6" fill="#2b2a33"/><circle cx="7" cy="5" r="2.6" fill="#2b2a33"/>
+            <circle cx="-12" cy="11" r="3" fill="#ff9a8a" opacity=".5"/><circle cx="12" cy="11" r="3" fill="#ff9a8a" opacity=".5"/>
+            <path d="M-6 12 Q0 18 6 12" stroke="#c9504a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <use href="#hat"/>
+          </g>
+          <g id="headScared">
+            <circle cx="-20" cy="3" r="4" fill="#f5c9a1"/><circle cx="20" cy="3" r="4" fill="#f5c9a1"/>
+            <circle r="20" fill="#f5c9a1"/>
+            <circle cx="-7" cy="5" r="5" fill="#fff"/><circle cx="7" cy="5" r="5" fill="#fff"/>
+            <circle cx="-7" cy="6" r="2" fill="#2b2a33"/><circle cx="7" cy="6" r="2" fill="#2b2a33"/>
+            <ellipse cy="15" rx="3.6" ry="4.6" fill="#c9504a"/>
+            <path d="M25 -2 q4 6 0 9 q-4 -3 0 -9z" fill="#7ec8f5"/>
+            <use href="#hat"/>
+          </g>
+        </defs>
+        <rect x="0" y="0" width="420" height="230" fill="#fdebd0"/>
+        <rect x="0" y="230" width="420" height="60" fill="#d9b38c"/>
+        <rect x="28" y="34" width="76" height="62" rx="6" fill="#bfe6f5" stroke="#fff" stroke-width="5"/>
+        <line x1="66" y1="34" x2="66" y2="96" stroke="#fff" stroke-width="4"/>
+        <line x1="28" y1="65" x2="104" y2="65" stroke="#fff" stroke-width="4"/>
+        <g id="lamp">
+          <line x1="210" y1="0" x2="210" y2="44" stroke="#8a7a66" stroke-width="3"/>
+          <path d="M190 70 Q210 38 230 70 Z" fill="#ffd45e"/>
+          <circle cx="210" cy="74" r="5" fill="#fff3b0"/>
+        </g>
+        <rect x="226" y="150" width="168" height="14" rx="5" fill="#a8693a"/>
+        <rect x="236" y="164" width="11" height="84" fill="#8a5429"/>
+        <rect x="373" y="164" width="11" height="84" fill="#8a5429"/>
+
+        <g id="figure" data-pose="stand">
+          <g transform="translate(0,14)">
+          <!-- ayakta -->
+          <g class="pose p-stand">
+            <rect x="97" y="200" width="11" height="30" rx="4" fill="#2b3a55"/>
+            <rect x="112" y="200" width="11" height="30" rx="4" fill="#2b3a55"/>
+            <ellipse cx="101" cy="231" rx="9.5" ry="5" fill="#4a3426"/><ellipse cx="119" cy="231" rx="9.5" ry="5" fill="#4a3426"/>
+            <rect x="90" y="150" width="40" height="56" rx="14" fill="#3b6ea8"/>
+            <rect x="95" y="152" width="30" height="52" rx="10" fill="#ff7a2f"/>
+            <rect x="100" y="152" width="4" height="52" fill="#eef1f5"/><rect x="116" y="152" width="4" height="52" fill="#eef1f5"/>
+            <line x1="94" y1="162" x2="82" y2="192" stroke="#3b6ea8" stroke-width="9" stroke-linecap="round"/>
+            <line x1="126" y1="162" x2="138" y2="192" stroke="#3b6ea8" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="81" cy="196" r="5" fill="#f5c9a1"/><circle cx="139" cy="196" r="5" fill="#f5c9a1"/>
+            <use class="f-calm" href="#headCalm" transform="translate(110,130)"/>
+            <use class="f-scared" href="#headScared" transform="translate(110,130)"/>
+          </g>
+          <!-- çök -->
+          <g class="pose p-crouch">
+            <rect x="94" y="203" width="40" height="27" rx="12" fill="#3b6ea8"/>
+            <rect x="99" y="204" width="30" height="25" rx="9" fill="#ff7a2f"/>
+            <rect x="105" y="204" width="3.5" height="25" fill="#eef1f5"/><rect x="120" y="204" width="3.5" height="25" fill="#eef1f5"/>
+            <ellipse cx="101" cy="231" rx="10" ry="5" fill="#4a3426"/><ellipse cx="125" cy="231" rx="10" ry="5" fill="#4a3426"/>
+            <line x1="98" y1="212" x2="88" y2="227" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <line x1="130" y1="212" x2="140" y2="227" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <use class="f-calm" href="#headCalm" transform="translate(114,190) scale(.85)"/>
+            <use class="f-scared" href="#headScared" transform="translate(114,190) scale(.85)"/>
+          </g>
+          <!-- kapan -->
+          <g class="pose p-cover">
+            <rect x="94" y="203" width="40" height="27" rx="12" fill="#3b6ea8"/>
+            <rect x="99" y="204" width="30" height="25" rx="9" fill="#ff7a2f"/>
+            <rect x="105" y="204" width="3.5" height="25" fill="#eef1f5"/><rect x="120" y="204" width="3.5" height="25" fill="#eef1f5"/>
+            <ellipse cx="101" cy="231" rx="10" ry="5" fill="#4a3426"/><ellipse cx="125" cy="231" rx="10" ry="5" fill="#4a3426"/>
+            <use class="f-calm" href="#headCalm" transform="translate(114,190) scale(.85)"/>
+            <use class="f-scared" href="#headScared" transform="translate(114,190) scale(.85)"/>
+            <line x1="100" y1="208" x2="106" y2="178" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <line x1="128" y1="208" x2="122" y2="178" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="107" cy="175" r="4.5" fill="#f5c9a1"/><circle cx="121" cy="175" r="4.5" fill="#f5c9a1"/>
+          </g>
+          <!-- tutun -->
+          <g class="pose p-hold">
+            <rect x="94" y="203" width="40" height="27" rx="12" fill="#3b6ea8"/>
+            <rect x="99" y="204" width="30" height="25" rx="9" fill="#ff7a2f"/>
+            <rect x="105" y="204" width="3.5" height="25" fill="#eef1f5"/><rect x="120" y="204" width="3.5" height="25" fill="#eef1f5"/>
+            <ellipse cx="101" cy="231" rx="10" ry="5" fill="#4a3426"/><ellipse cx="125" cy="231" rx="10" ry="5" fill="#4a3426"/>
+            <use class="f-calm" href="#headCalm" transform="translate(114,190) scale(.85)"/>
+            <use class="f-scared" href="#headScared" transform="translate(114,190) scale(.85)"/>
+            <line x1="128" y1="208" x2="122" y2="178" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="121" cy="175" r="4.5" fill="#f5c9a1"/>
+            <line x1="100" y1="209" x2="58" y2="198" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="56" cy="198" r="4.5" fill="#f5c9a1"/>
+          </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="ctrl">
+      <button class="btn" id="qStart" type="button">🌍 Depremi başlat</button>
+      <button class="btn ghost" id="qReset" type="button">Sıfırla</button>
+    </div>
+    <div class="choices" id="qBox"></div>
+    <div class="guide" id="guide2" data-mood="happy"></div>
+  </section>
+
+  <!-- OYUN 3: YANGIN -->
+  <section class="section" id="yangin">
+    <h2>🔥 Oyun 3: Yangın çıktı!</h2>
+    <p class="lead">Yangını başlat ve doğru adımları sırayla seç. Tuzak butonlara dikkat!</p>
+    <div class="fire-scene" id="fireScene">
+      <div class="fs-ground"></div>
+      <div class="fs-bld">🏢</div>
+      <div class="fs-fire">🔥</div>
+      <div class="fs-smoke">💨</div>
+      <div class="fs-runner" id="fsRunner"><svg viewBox="0 0 60 92" aria-hidden="true">
+        <rect x="19" y="62" width="9" height="22" rx="4" fill="#2b3a55"/><rect x="32" y="62" width="9" height="22" rx="4" fill="#2b3a55"/>
+        <ellipse cx="22" cy="86" rx="9" ry="4.5" fill="#4a3426"/><ellipse cx="38" cy="86" rx="9" ry="4.5" fill="#4a3426"/>
+        <line x1="16" y1="40" x2="8" y2="58" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/><line x1="44" y1="40" x2="52" y2="58" stroke="#3b6ea8" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="7" cy="61" r="4" fill="#f5c9a1"/><circle cx="53" cy="61" r="4" fill="#f5c9a1"/>
+        <rect x="14" y="32" width="32" height="34" rx="12" fill="#3b6ea8"/>
+        <rect x="18" y="34" width="24" height="30" rx="9" fill="#ff7a2f"/>
+        <rect x="22" y="34" width="3" height="30" fill="#eef1f5"/><rect x="35" y="34" width="3" height="30" fill="#eef1f5"/>
+        <circle cx="30" cy="22" r="14" fill="#f5c9a1"/>
+        <circle cx="25" cy="26" r="1.9" fill="#2b2a33"/><circle cx="35" cy="26" r="1.9" fill="#2b2a33"/>
+        <path d="M26 31 Q30 35 34 31" stroke="#c9504a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M14 20 Q14 2 30 2 Q46 2 46 20Z" fill="#ffd23f"/>
+        <rect x="11" y="18" width="38" height="5" rx="2.5" fill="#f2b705"/><rect x="26" y="1" width="8" height="18" rx="3" fill="#f2b705"/>
+      </svg></div>
+      <div class="fs-goal">🌳 Toplanma alanı</div>
+      <div class="fs-truck">🚒</div>
+    </div>
+    <div class="ctrl">
+      <button class="btn" id="fStart" type="button">🔥 Yangını başlat</button>
+      <button class="btn ghost" id="fReset" type="button">Sıfırla</button>
+    </div>
+    <div class="choices" id="fBox"></div>
+    <div class="guide" id="guide3" data-mood="happy"></div>
+  </section>
+
+  <!-- OYUN 4: SEL -->
+  <section class="section" id="sel">
+    <h2>🌊 Oyun 4: Sel: güvenli mi, tehlikeli mi?</h2>
+    <p class="lead">Kartlardaki davranış güvenli mi, tehlikeli mi? Karar ver!</p>
+    <div class="flood-top"><div class="rain">🌧️ ☁️ 🌧️ ☁️ 🌧️</div><div class="waves">🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊</div></div>
+    <div class="s-card" id="floodBox"></div>
+    <div class="guide" id="guide4" data-mood="happy"></div>
+  </section>
+
+  <!-- OYUN 5: ÇIĞ -->
+  <section class="section" id="cig">
+    <h2>🏔️ Oyun 5: Çığ <small style="font-weight:600;color:var(--muted)">(bonus)</small></h2>
+    <p class="lead">Çığ, özellikle karlı ve yüksek dağlık bölgelerde (örneğin Doğu Anadolu, Doğu Karadeniz ve Toroslar'da) görülür. Kış tatilinde dağa gidersen ya da o bölgelerde yaşıyorsan bu bilgiler çok işine yarar.</p>
+    <div class="av-scene" id="avScene">
+      <div class="av-mtn">🏔️</div>
+      <div class="av-tree" style="left:60%">🌲</div><div class="av-tree" style="left:68%">🌲</div><div class="av-tree" style="left:88%">🌲</div>
+      <div class="av-ground"></div>
+      <div class="av-wave"></div>
+      <div class="av-runner" id="avRunner"></div>
+      <div class="av-heli">🚁</div>
+    </div>
+    <div class="ctrl">
+      <button class="btn" id="aStart" type="button">❄️ Çığı başlat</button>
+      <button class="btn ghost" id="aReset" type="button">Sıfırla</button>
+    </div>
+    <div class="choices" id="aBox"></div>
+    <div class="guide" id="guide6" data-mood="happy"></div>
+  </section>
+
+  <!-- TEST -->
+  <section class="section" id="test">
+    <h2>📝 Kendini test et: Afete ne kadar hazırsın?</h2>
+    <p class="lead"><span id="qCount">13</span> kısa soru. Cevapların hiçbir yere kaydedilmez, sadece sen görürsün.</p>
+    <div id="quizBox"></div>
+    <div class="guide" id="guide5" data-mood="happy"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <img src="logo.png" width="88" height="88" loading="lazy" decoding="async" alt="Okul logosu" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-ph',textContent:'LOGO'}))">
+      <div class="fname"><span data-okul>Okul Adı</span><small data-kulup>Afet Kulübü</small></div>
+    </div>
+    <div>Acil durumda <strong>112</strong>'yi ara. Bu site eğitim amaçlıdır; bilgiler AFAD ve resmî kaynakların genel önerilerine dayanır. En güncel bilgi için afad.gov.tr adresine bakın.</div>
+  </div>
+</footer>
+
+<script>
+/* ====== BURAYI KENDİNE GÖRE DEĞİŞTİR ====== */
+const CONFIG = { okul: "Asiye Ağaoğlu Anadolu Lisesi", kulup: "Afet Hazırlık Kulübü" };
+/* ========================================== */
+
+document.querySelectorAll("[data-okul]").forEach(e => e.textContent = CONFIG.okul);
+document.querySelectorAll("[data-kulup]").forEach(e => e.textContent = CONFIG.kulup);
+document.title = "Afete Hazır mıyız? · " + CONFIG.okul;
+
+const $ = id => document.getElementById(id);
+
+/* Performans: ekranda olmayan bölümlerin animasyonlarını durdur */
+if ("IntersectionObserver" in window){
+  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("off", !e.isIntersecting)), {rootMargin: "150px"});
+  document.querySelectorAll("main > section").forEach(el => io.observe(el));
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* ================= AFET ABİ (rehber karakter) ================= */
+const MASCOT_SVG = `<svg viewBox="0 0 140 130" aria-hidden="true">
+  <g class="m m-cheer">
+    <line x1="32" y1="106" x2="14" y2="68" stroke="#3b6ea8" stroke-width="11" stroke-linecap="round"/>
+    <line x1="108" y1="106" x2="126" y2="68" stroke="#3b6ea8" stroke-width="11" stroke-linecap="round"/>
+    <circle cx="13" cy="64" r="7" fill="#f5c9a1"/><circle cx="127" cy="64" r="7" fill="#f5c9a1"/>
+  </g>
+  <rect x="26" y="92" width="88" height="40" rx="18" fill="#3b6ea8"/>
+  <rect x="35" y="94" width="70" height="38" rx="14" fill="#ff7a2f"/>
+  <rect x="47" y="94" width="9" height="38" fill="#eef1f5"/><rect x="84" y="94" width="9" height="38" fill="#eef1f5"/>
+  <rect x="60" y="82" width="20" height="16" rx="6" fill="#f5c9a1"/>
+  <circle cx="39" cy="61" r="6" fill="#f5c9a1"/><circle cx="101" cy="61" r="6" fill="#f5c9a1"/>
+  <circle cx="70" cy="56" r="31" fill="#f5c9a1"/>
+  <g class="m m-happy">
+    <circle cx="58" cy="68" r="3.6" fill="#2b2a33"/><circle cx="82" cy="68" r="3.6" fill="#2b2a33"/>
+    <circle cx="50" cy="76" r="5" fill="#ff9a8a" opacity=".55"/><circle cx="90" cy="76" r="5" fill="#ff9a8a" opacity=".55"/>
+    <path d="M60 77 Q70 88 80 77" stroke="#c9504a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <g class="m m-cheer">
+    <path d="M52 70 Q58 62 64 70" stroke="#2b2a33" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M76 70 Q82 62 88 70" stroke="#2b2a33" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <circle cx="50" cy="77" r="5" fill="#ff9a8a" opacity=".55"/><circle cx="90" cy="77" r="5" fill="#ff9a8a" opacity=".55"/>
+    <path d="M58 76 Q70 96 82 76 Z" fill="#c9504a"/>
+  </g>
+  <g class="m m-scared">
+    <circle cx="58" cy="68" r="6.5" fill="#fff"/><circle cx="82" cy="68" r="6.5" fill="#fff"/>
+    <circle cx="58" cy="70" r="2.4" fill="#2b2a33"/><circle cx="82" cy="70" r="2.4" fill="#2b2a33"/>
+    <ellipse cx="70" cy="82" rx="5.5" ry="6.5" fill="#c9504a"/>
+    <path d="M108 62 q6 9 0 13 q-6 -4 0 -13z" fill="#7ec8f5"/>
+  </g>
+  <g class="m m-oops">
+    <circle cx="58" cy="69" r="3.4" fill="#2b2a33"/><circle cx="82" cy="69" r="3.4" fill="#2b2a33"/>
+    <path d="M51 62 L64 65" stroke="#2b2a33" stroke-width="2.6" stroke-linecap="round"/><path d="M89 62 L76 65" stroke="#2b2a33" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M61 83 Q70 75 79 83" stroke="#c9504a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M108 62 q6 9 0 13 q-6 -4 0 -13z" fill="#7ec8f5"/>
+  </g>
+  <path d="M36 51 Q36 17 70 17 Q104 17 104 51 Z" fill="#ffd23f"/>
+  <rect x="29" y="49" width="82" height="9" rx="4.5" fill="#f2b705"/>
+  <rect x="63" y="15" width="14" height="36" rx="5" fill="#f2b705"/>
+</svg>`;
+
+document.querySelectorAll(".guide").forEach(g => {
+  g.insertAdjacentHTML("afterbegin", '<div class="mascot">' + MASCOT_SVG + '</div><div class="bubble"></div>');
+});
+function say(g, html, mood){
+  g.dataset.mood = mood || "happy";
+  const b = g.querySelector(".bubble");
+  b.innerHTML = html;
+  b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
+}
+
+say($("guideHero"), "Merhaba! Ben <b>Afet Abi</b>. 👷 Seninle küçük oyunlar oynayıp deprem, yangın, sel ve çığ gibi afetlere nasıl hazırlanacağımızı öğreneceğiz. Doğru yaparsan seni tebrik ederim, yanlış yaparsan birlikte düzeltiriz. Sonunda da kendini test edeceksin. Hazırsan başlayalım!", "cheer");
+
+/* ================= OYUN 1: ÇANTA ================= */
+function setHdr(){ const h = document.querySelector("header"); document.documentElement.style.setProperty("--hdr", h.offsetHeight + "px"); }
+setHdr(); window.addEventListener("resize", setHdr);
+
+/* Küçük, sevimli eşya çizimleri */
+const FACE = (x, y) => `<circle cx="${x-4.5}" cy="${y}" r="1.7" fill="#2b2a33"/><circle cx="${x+4.5}" cy="${y}" r="1.7" fill="#2b2a33"/><path d="M${x-2.6} ${y+3.6} Q${x} ${y+6.4} ${x+2.6} ${y+3.6}" stroke="#2b2a33" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="${x-8}" cy="${y+3}" r="2" fill="#ff9a8a" opacity=".55"/><circle cx="${x+8}" cy="${y+3}" r="2" fill="#ff9a8a" opacity=".55"/>`;
+const F = () => '';
+const SV = inner => `<svg viewBox="0 0 64 64" aria-hidden="true">${inner}</svg>`;
+/* Oyunvari ama gerçeğe yakın eşya çizimleri: koyu hat + açık renk yüzeyler + parlama */
+const OL  = 'stroke="#33291f" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+const OLT = 'stroke="#33291f" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = {
+  su: SV(`<rect x="25" y="3" width="14" height="9" rx="2.5" fill="#2b6fb8" ${OL}/><path d="M26 12h12l2 5c6 3 8 7 8 12v24a5 5 0 0 1-5 5H21a5 5 0 0 1-5-5V29c0-5 2-9 8-12z" fill="#bfe9fb"/><path d="M16 36h32v17a5 5 0 0 1-5 5H21a5 5 0 0 1-5-5z" fill="#5cb8e6"/><rect x="16" y="26" width="32" height="12" fill="#fff"/><path d="M20 32q3-3 6 0t6 0 6 0 6 0" stroke="#2b6fb8" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M26 12h12l2 5c6 3 8 7 8 12v24a5 5 0 0 1-5 5H21a5 5 0 0 1-5-5V29c0-5 2-9 8-12z" fill="none" ${OL}/><path d="M22 20v5M22 42v12" stroke="#fff" stroke-width="2.6" opacity=".75" stroke-linecap="round"/>`),
+
+  yiyecek: SV(`<path d="M14 18v34c0 4 8 7 18 7s18-3 18-7V18z" fill="#dfe6ee"/><path d="M14 26v22c0 4 8 7 18 7s18-3 18-7V26c0 4-8 7-18 7s-18-3-18-7z" fill="#ff7a2f"/><path d="M20 41q12 6 24 0" stroke="#ffd23f" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M14 18v34c0 4 8 7 18 7s18-3 18-7V18" fill="none" ${OL}/><ellipse cx="32" cy="18" rx="18" ry="6" fill="#c5cdd8" ${OL}/><ellipse cx="32" cy="18" rx="12" ry="3.5" fill="#e9eef4"/><ellipse cx="32" cy="17.5" rx="4.5" ry="2" fill="none" stroke="#8d99aa" stroke-width="1.8"/><path d="M19 28v22" stroke="#fff" stroke-width="2.4" opacity=".55" stroke-linecap="round"/>`),
+
+  duduk: SV(`<circle cx="52" cy="13" r="5.5" fill="none" stroke="#8a8a8a" stroke-width="2.6"/><path d="M48.5 17.5L44 26" stroke="#8a8a8a" stroke-width="2.4" stroke-linecap="round"/><rect x="5" y="31" width="27" height="13" rx="5" fill="#f2b705" ${OL}/><circle cx="41" cy="38" r="17" fill="#ffd23f" ${OL}/><rect x="28" y="27" width="12" height="5" rx="2" fill="#33291f"/><circle cx="43" cy="41" r="4.5" fill="#fff3b0" ${OL}/><path d="M48 27a11 11 0 0 1 7 7" stroke="#fff" stroke-width="2.6" fill="none" opacity=".7" stroke-linecap="round"/>`),
+
+  fener: SV(`<g transform="translate(32 32) rotate(-38) scale(.82) translate(-32 -32)"><path d="M54 19L62 12V46L54 45Z" fill="#fff3b0" opacity=".8"/><rect x="3" y="25" width="9" height="14" rx="3" fill="#5b6b8c" ${OL}/><rect x="10" y="22" width="32" height="20" rx="4" fill="#ff7a2f" ${OL}/><path d="M17 25v14M22 25v14M27 25v14" stroke="#c4501a" stroke-width="2.2" stroke-linecap="round"/><path d="M14 25.5h22" stroke="#fff" stroke-width="2" opacity=".5" stroke-linecap="round"/><rect x="31" y="17" width="8" height="5" rx="2" fill="#ffd23f" ${OL}/><path d="M42 22L52 14V50L42 42Z" fill="#ffd23f" ${OL}/><ellipse cx="52" cy="32" rx="3.6" ry="18" fill="#fff3b0" ${OL}/></g>`),
+
+  ilkyardim: SV(`<path d="M24 18v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4" fill="none" stroke="#33291f" stroke-width="6" stroke-linecap="round"/><path d="M24 18v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4" fill="none" stroke="#f2b705" stroke-width="2.6" stroke-linecap="round"/><rect x="7" y="18" width="50" height="38" rx="8" fill="#e5484d" ${OL}/><path d="M7 31h50" stroke="#b8353a" stroke-width="2"/><rect x="13" y="27" width="6" height="8" rx="2" fill="#ffd23f" ${OLT}/><rect x="45" y="27" width="6" height="8" rx="2" fill="#ffd23f" ${OLT}/><path d="M29 36h6v6h6v6h-6v6h-6v-6h-6v-6h6z" fill="#fff" ${OL}/><path d="M11 22h14" stroke="#fff" stroke-width="2.2" opacity=".4" stroke-linecap="round"/>`),
+
+  radyo: SV(`<path d="M45 22L55 8" stroke="#8a8a8a" stroke-width="2.6" stroke-linecap="round"/><circle cx="55" cy="7" r="3" fill="#ff7a2f" ${OLT}/><path d="M17 22v-6a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4v6" fill="none" stroke="#33291f" stroke-width="6" stroke-linecap="round"/><path d="M17 22v-6a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4v6" fill="none" stroke="#ffd23f" stroke-width="2.4" stroke-linecap="round"/><rect x="6" y="22" width="52" height="35" rx="7" fill="#3aa8a0" ${OL}/><circle cx="22" cy="40" r="11" fill="#2c7f79" ${OL}/><path d="M16 36h12M15 40h14M16 44h12" stroke="#3aa8a0" stroke-width="2" stroke-linecap="round"/><rect x="38" y="27" width="15" height="9" rx="2.5" fill="#fff3b0" ${OL}/><path d="M41 31.5h9" stroke="#e2611a" stroke-width="2" stroke-linecap="round"/><circle cx="42" cy="47" r="3.8" fill="#ffd23f" ${OL}/><circle cx="52" cy="47" r="3.8" fill="#ffd23f" ${OL}/>`),
+
+  battaniye: SV(`<rect x="6" y="19" width="46" height="31" rx="10" fill="#ff9f6b" ${OL}/><rect x="14" y="19.5" width="5" height="30" fill="#ffd23f"/><rect x="23" y="19.5" width="5" height="30" fill="#ffd23f"/><path d="M8 24q3-3 6-3" stroke="#fff" stroke-width="2.2" opacity=".5" fill="none" stroke-linecap="round"/><rect x="36" y="17" width="6" height="35" rx="2" fill="#8a5429" ${OL}/><ellipse cx="52" cy="34.5" rx="7" ry="15.5" fill="#ffc29a" ${OL}/><ellipse cx="52" cy="34.5" rx="3.6" ry="9" fill="none" stroke="#e2611a" stroke-width="2"/><ellipse cx="52" cy="34.5" rx="1" ry="3" fill="#e2611a"/>`),
+
+  ilac: SV(`<rect x="19" y="4" width="26" height="12" rx="3.5" fill="#fff" ${OL}/><path d="M24 7v6M29 7v6M34 7v6M39 7v6" stroke="#cfc3ad" stroke-width="1.8" stroke-linecap="round"/><rect x="15" y="15" width="34" height="43" rx="8" fill="#ffb347" ${OL}/><path d="M20 20v34" stroke="#fff" stroke-width="2.4" opacity=".5" stroke-linecap="round"/><rect x="15" y="26" width="34" height="22" fill="#fff" stroke="#33291f" stroke-width="2.2"/><path d="M32 30v14M25 37h14" stroke="#e5484d" stroke-width="4.6" stroke-linecap="round"/>`),
+
+  belge: SV(`<path d="M16 5h24l13 13v38a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4z" fill="#fff" ${OL}/><path d="M40 5v13h13z" fill="#f3e3cc" ${OL}/><rect x="18" y="25" width="22" height="3.4" rx="1.7" fill="#b8c3d1"/><rect x="18" y="32" width="28" height="3.4" rx="1.7" fill="#b8c3d1"/><rect x="18" y="39" width="18" height="3.4" rx="1.7" fill="#b8c3d1"/><path d="M38 54l-2 7 6-3 6 3-2-7z" fill="#c9373c" ${OLT}/><circle cx="42" cy="50" r="6.5" fill="#e5484d" ${OL}/><path d="M39 50l2 2 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`),
+
+  nakit: SV(`<g transform="rotate(-9 32 32)"><rect x="6" y="15" width="46" height="26" rx="4" fill="#9fd9b0" ${OL}/></g><rect x="9" y="24" width="48" height="28" rx="4" fill="#4caf6a" ${OL}/><rect x="13" y="28" width="40" height="20" rx="2.5" fill="none" stroke="#b7e4c4" stroke-width="1.6"/><circle cx="33" cy="38" r="8.5" fill="#b7e4c4" ${OL}/><text x="33" y="42.6" text-anchor="middle" font-size="12" font-weight="800" fill="#2f7d4a" font-family="Arial,sans-serif">₺</text><circle cx="18.5" cy="38" r="2" fill="#b7e4c4"/><circle cx="47.5" cy="38" r="2" fill="#b7e4c4"/>`),
+
+  powerbank: SV(`<path d="M47 50q10 0 10-10V30" fill="none" stroke="#33291f" stroke-width="4.4" stroke-linecap="round"/><path d="M47 50q10 0 10-10V30" fill="none" stroke="#ff7a2f" stroke-width="1.8" stroke-linecap="round"/><rect x="26" y="2" width="12" height="8" rx="1.5" fill="#cfd6df" ${OL}/><rect x="17" y="9" width="30" height="50" rx="8" fill="#5b6b8c" ${OL}/><rect x="22" y="15" width="20" height="14" rx="3" fill="#cfe9ff" ${OL}/><path d="M33.5 17l-5 6.5h4l-1 4.5 5-6.5h-4z" fill="#ffb300"/><rect x="22.5" y="36" width="5" height="13" rx="1.5" fill="#7be495" ${OLT}/><rect x="29.5" y="36" width="5" height="13" rx="1.5" fill="#7be495" ${OLT}/><rect x="36.5" y="36" width="5" height="13" rx="1.5" fill="#e8eef5" ${OLT}/>`),
+
+  maske: SV(`<path d="M13 27Q2 32 11 45" fill="none" stroke="#33291f" stroke-width="2.6" stroke-linecap="round"/><path d="M51 27Q62 32 53 45" fill="none" stroke="#33291f" stroke-width="2.6" stroke-linecap="round"/><path d="M12 24Q32 17 52 24V40Q52 51 32 54Q12 51 12 40Z" fill="#bfe6f5" ${OL}/><path d="M14 31Q32 36 50 31M14 38Q32 43 50 38M16 45q16 5 32 0" stroke="#7fb9d4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M24 22Q32 19 40 22" stroke="#8a8a8a" stroke-width="2.4" fill="none" stroke-linecap="round"/>`),
+
+  kiyafet: SV(`<g transform="translate(-2 -2) scale(.82)"><path d="M22 8L8 16l6 12 7-4v31h22V24l7 4 6-12-14-8q-3 7-10 7t-10-7z" fill="#3b6ea8" ${OL}/><path d="M22 8q3 7 10 7t10-7" fill="none" stroke="#ff7a2f" stroke-width="3" stroke-linecap="round"/><rect x="21" y="48" width="22" height="3.5" fill="#ff7a2f"/><rect x="25" y="29" width="10" height="9" rx="2" fill="#2f5a8c" ${OLT}/></g><path d="M38 38h11v12l8 3q5 2 5 7v2H38z" fill="#8a5429" ${OL}/><rect x="38" y="58" width="24" height="4.5" rx="2" fill="#33291f"/><path d="M41 43h5M41 48h5" stroke="#ffd23f" stroke-width="2" stroke-linecap="round"/>`),
+
+  hijyen: SV(`<path d="M26 14q6-9 14 0v6H26z" fill="#fff" ${OL}/><rect x="12" y="16" width="40" height="42" rx="9" fill="#7ec8f5" ${OL}/><rect x="19" y="12" width="26" height="10" rx="3.5" fill="#fff" ${OL}/><path d="M32 29q-8 10-8 15a8 8 0 0 0 16 0q0-5-8-15z" fill="#fff" ${OL}/><path d="M17 26v26" stroke="#fff" stroke-width="2.4" opacity=".5" stroke-linecap="round"/>`),
+
+  konsol: SV(`<rect x="12" y="13" width="13" height="7" rx="3" fill="#4b3fb0" ${OL}/><rect x="39" y="13" width="13" height="7" rx="3" fill="#4b3fb0" ${OL}/><path d="M17 20h30c9 0 14 6 15 15 1 8 0 16-6 16-5 0-6-5-10-9H18c-4 4-5 9-10 9-6 0-7-8-6-16 1-9 6-15 15-15z" fill="#6d5acd" ${OL}/><path d="M16 26h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#fff" ${OLT}/><circle cx="49" cy="27" r="3" fill="#ffd23f" ${OLT}/><circle cx="55" cy="33" r="3" fill="#ff7a2f" ${OLT}/><circle cx="49" cy="39" r="3" fill="#e5484d" ${OLT}/><circle cx="43" cy="33" r="3" fill="#7be495" ${OLT}/><circle cx="28" cy="32" r="1.8" fill="#fff"/><circle cx="36" cy="32" r="1.8" fill="#fff"/>`),
+
+  mum: SV(`<path d="M32 3q9 10 0 20q-9-10 0-20z" fill="#ff9f1c" ${OL}/><path d="M32 11q4 5 0 9q-4-4 0-9z" fill="#ffe27a"/><path d="M32 23v5" stroke="#33291f" stroke-width="2.4" stroke-linecap="round"/><path d="M20 31q0-3 4-3h16q4 0 4 3v25a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4z" fill="#fff3d6" ${OL}/><path d="M21 34q5 4 8 0 3 7 7 1 3 4 7-1" stroke="#e8d3a0" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M25 42v12" stroke="#fff" stroke-width="2.4" opacity=".8" stroke-linecap="round"/><rect x="48" y="40" width="3.4" height="20" rx="1.7" fill="#d9ad6a" ${OLT}/><circle cx="49.7" cy="38" r="4.4" fill="#e2492f" ${OL}/>`),
+
+  parfum: SV(`<rect x="24" y="4" width="16" height="13" rx="3.5" fill="#b388ff" ${OL}/><rect x="28" y="17" width="8" height="8" fill="#f2b705" ${OL}/><path d="M20 25h24a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8V33a8 8 0 0 1 8-8z" fill="#f7a8d8" ${OL}/><path d="M32 52l-7-7a4.2 4.2 0 0 1 7-5 4.2 4.2 0 0 1 7 5z" fill="#fff" ${OLT}/><path d="M17 31v18" stroke="#fff" stroke-width="2.6" opacity=".55" stroke-linecap="round"/>`),
+
+  susesyasi: SV(`<path d="M26 13h12c0 8-2 9-2 13 12 3 16 16 10 27q-3 6-14 6t-14-6c-6-11-2-24 10-27 0-4-2-5-2-13z" fill="#e07a5f" ${OL}/><rect x="22" y="6" width="20" height="8" rx="3.5" fill="#c9604a" ${OL}/><path d="M18 40q14 7 28 0" stroke="#ffd23f" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="26" cy="49" r="2" fill="#ffd23f"/><circle cx="32" cy="52" r="2" fill="#ffd23f"/><circle cx="38" cy="49" r="2" fill="#ffd23f"/><path d="M21 32q-3 6-2 12" stroke="#fff" stroke-width="2.4" opacity=".5" fill="none" stroke-linecap="round"/>`),
+
+  ayi: SV(`<circle cx="17" cy="14" r="8" fill="#b9814f" ${OL}/><circle cx="47" cy="14" r="8" fill="#b9814f" ${OL}/><circle cx="17" cy="14" r="3.8" fill="#e8c39e"/><circle cx="47" cy="14" r="3.8" fill="#e8c39e"/><ellipse cx="32" cy="52" rx="17" ry="11" fill="#c9935c" ${OL}/><circle cx="14" cy="47" r="6" fill="#c9935c" ${OL}/><circle cx="50" cy="47" r="6" fill="#c9935c" ${OL}/><circle cx="32" cy="27" r="19" fill="#c9935c" ${OL}/><ellipse cx="32" cy="33" rx="9" ry="7" fill="#e8c39e" ${OLT}/><ellipse cx="32" cy="30" rx="3.4" ry="2.4" fill="#33291f"/><circle cx="25" cy="22" r="2.2" fill="#33291f"/><circle cx="39" cy="22" r="2.2" fill="#33291f"/><path d="M29 35q3 3 6 0" stroke="#33291f" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M32 45l-7-4v8zM32 45l7-4v8z" fill="#ff6fa8" ${OLT}/><circle cx="32" cy="45" r="2.4" fill="#e5487f" ${OLT}/>`)
+};
+
+const BAG_SVG = `<svg viewBox="0 0 100 112" aria-hidden="true">
+  <path d="M38 17Q38 4 50 4Q62 4 62 17" fill="none" stroke="#33291f" stroke-width="9" stroke-linecap="round"/>
+  <path d="M38 17Q38 4 50 4Q62 4 62 17" fill="none" stroke="#f2b705" stroke-width="5" stroke-linecap="round"/>
+  <rect x="5" y="60" width="18" height="38" rx="7" fill="#ff9a4d" ${OL}/>
+  <rect x="77" y="60" width="18" height="38" rx="7" fill="#ff9a4d" ${OL}/>
+  <path d="M10 70h8M10 78h8M82 70h8M82 78h8" stroke="#e2611a" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M17 38Q17 14 50 14Q83 14 83 38V98Q83 108 73 108H27Q17 108 17 98Z" fill="#ff7a2f" ${OL}/>
+  <path d="M18 40Q18 15 50 15Q82 15 82 40Q50 60 18 40Z" fill="#ff9a4d" ${OL}/>
+  <rect x="46.5" y="46" width="7" height="14" rx="2" fill="#e2611a" ${OL}/>
+  <rect x="42" y="56" width="16" height="11" rx="3.5" fill="#ffd23f" ${OL}/>
+  <rect x="47" y="59.5" width="6" height="4" rx="1.5" fill="#33291f" opacity=".8"/>
+  <rect x="17" y="73" width="66" height="7" fill="#eef1f5" stroke="#33291f" stroke-width="1.6"/>
+  <rect x="27" y="82" width="46" height="22" rx="8" fill="#e2611a" ${OL}/>
+  <path d="M33 90h34" stroke="#33291f" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round"/>
+  <circle cx="67" cy="90" r="2.6" fill="#ffd23f" ${OLT}/>
+  <path d="M24 34Q26 22 40 19" stroke="#fff" stroke-width="3" opacity=".45" fill="none" stroke-linecap="round"/>
+</svg>`;
+
+const ITEMS = [
+  {ic:"su", name:"İçme suyu", good:true,  why:"Susuz kalmamak çok önemli. Afet sonrası musluk suyu kesilebilir, bu yüzden hazır su şart."},
+  {ic:"yiyecek", name:"Konserve ve uzun ömürlü yiyecek", good:true, why:"AFAD, çabuk bozulmayan ve yüksek kalorili yiyecekleri öneriyor (konserve, kuru meyve, tahin-pekmez gibi). Pişirmeden yenebilir olmaları büyük avantaj."},
+  {ic:"duduk", name:"Düdük", good:true, why:"Enkaz altında bağırmak çok enerji harcatır. Düdük az güçle uzağa duyulur ve kurtarma ekiplerinin seni bulmasını kolaylaştırır."},
+  {ic:"fener", name:"El feneri ve yedek pil", good:true, why:"Elektrik kesilince karanlıkta yol bulmanı sağlar. Açık alev yerine her zaman el feneri kullan."},
+  {ic:"ilkyardim", name:"İlk yardım çantası", good:true, why:"Küçük yaralanmalarda pansuman ve temizlik için gerekir. Yardım ekipleri hemen ulaşamayabilir."},
+  {ic:"radyo", name:"Pilli / şarjlı radyo", good:true, why:"Telefon ve internet çekmeyebilir. Radyo, resmî duyuruları ve yönlendirmeleri takip etmenin güvenilir yoludur."},
+  {ic:"battaniye", name:"Battaniye", good:true, why:"Soğukta vücut ısını korur. Katlanabilir bir battaniye çantada çok yer kaplamaz."},
+  {ic:"ilac", name:"Kişisel ilaçlar", good:true, why:"Düzenli kullandığın bir ilaç varsa birkaç günlük yedeği çantada olmalı. Son kullanma tarihlerini kontrol et."},
+  {ic:"belge", name:"Önemli belgelerin kopyası", good:true, why:"AFAD, evrak fotokopilerinin su geçirmez bir koruma içinde saklanmasını öneriyor."},
+  {ic:"nakit", name:"Nakit para", good:true, why:"Elektrik kesilince kartlı ödeme ve ATM'ler çalışmayabilir. Biraz nakit işe yarar."},
+  {ic:"powerbank", name:"Powerbank", good:true, why:"Telefonunu şarj edip haberleşmeni sürdürmeni sağlar. Zaman zaman şarjını kontrol et."},
+  {ic:"maske", name:"Toz maskesi", good:true, why:"Yıkılan binalardan yayılan toz solunumu zorlar. Maske tozdan korunmana yardım eder."},
+  {ic:"kiyafet", name:"Yedek kıyafet ve sağlam ayakkabı", good:true, why:"Mevsime uygun yedek kıyafet ve sağlam ayakkabı, soğuktan ve kırık cam gibi tehlikelerden korur."},
+  {ic:"hijyen", name:"Islak mendil / hijyen malzemesi", good:true, why:"Su sıkıntısı olduğunda temizlik ve hastalıklardan korunma için işe yarar."},
+
+  {ic:"konsol", name:"Oyun konsolu", good:false, why:"Ağırdır, elektrik ister ve hayatta kalmana katkısı yoktur. Çantada yer kaplar."},
+  {ic:"mum", name:"Mum ve kibrit", good:false, why:"Deprem sonrası gaz kaçağı olabilir. AFAD, kibrit ve çakmak yakılmamasını söylüyor. Bunun yerine el feneri kullan."},
+  {ic:"parfum", name:"Parfüm", good:false, why:"Güzel kokar ama o anda ihtiyacın olan şey değil. Çanta küçük, öncelikler net olmalı."},
+  {ic:"susesyasi", name:"Süs eşyası", good:false, why:"Kırılgan ve ağırdır. Çantada sadece işe yarayan, hafif eşyalar olmalı."},
+  {ic:"ayi", name:"Büyük boy oyuncak ayı", good:false, why:"Sevimli ama çok yer kaplar. Küçük kardeşler için küçük bir teselli oyuncağı olabilir; önce su, ilaç ve ilk yardım gelir."}
+];
+const goodTotal = ITEMS.filter(i => i.good).length;
+let found = 0, wrong = 0;
+const g1 = $("guide1");
+$("bag").innerHTML = BAG_SVG;
+
+function updateBag(){ $("bagCount").textContent = found + " / " + goodTotal; }
+function renderItems(){
+  found = 0; wrong = 0;
+  $("itemGrid").innerHTML = ""; $("bagItems").innerHTML = "";
+  say(g1, "Selam! Afet çantasında neler olmalı, birlikte bakalım. Bir eşyayı sürükleyip çantaya bırak. Doğruysa çantada kalır, yanlışsa nedenini anlatırım!", "happy");
+  shuffle([...ITEMS]).forEach(it => {
+    const b = document.createElement("div");
+    b.className = "item"; b.tabIndex = 0; b.setAttribute("role", "button");
+    b.setAttribute("aria-label", it.name + " (çantaya koymak için Enter'a bas)");
+    b.innerHTML = '<div class="ic">' + ICONS[it.ic] + '</div><span>' + it.name + '</span>';
+    makeDraggable(b, it);
+    $("itemGrid").appendChild(b);
+  });
+  updateBag();
+}
+function pickItem(it, b){
+  if (b.dataset.used) return;
+  b.dataset.used = "1"; b.removeAttribute("tabindex"); b.setAttribute("aria-disabled", "true");
+  if (it.good){
+    found++;
+    b.classList.add("in");
+    const s = document.createElement("span"); s.className = "mini"; s.title = it.name; s.innerHTML = ICONS[it.ic];
+    $("bagItems").appendChild(s);
+    const bag = $("bag"); bag.classList.remove("bump"); void bag.offsetWidth; bag.classList.add("bump");
+    say(g1, "✅ <b>" + it.name + ":</b> " + it.why, "cheer");
+  } else {
+    wrong++;
+    b.classList.add("out");
+    say(g1, "❌ <b>" + it.name + ":</b> " + it.why, "oops");
+  }
+  updateBag();
+  if (found === goodTotal){
+    say(g1, "🎉 <b>Çantan hazır!</b> Tüm önemli eşyaları buldun" +
+      (wrong ? " (" + wrong + " yanlış denemeyle)." : ", hem de hiç yanlış yapmadan!") +
+      " AFAD'a göre çanta, çıkışa yakın ve kolay ulaşılır bir yerde durmalı ve altı ayda bir kontrol edilmeli. Çanta sadece evde değil, okulda da bulunmalı.", "cheer");
+  }
+}
+
+/* Sürükle-bırak */
+let drag = null;
+function inBag(x, y){ const r = $("bagBox").getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; }
+function startDrag(el, it, x, y){
+  const ghost = document.createElement("div");
+  ghost.className = "ghost"; ghost.innerHTML = ICONS[it.ic];
+  document.body.appendChild(ghost);
+  el.classList.add("dragging");
+  drag = {ghost, it, el, w: ghost.offsetWidth, over: false};
+  px = x; py = y; applyDrag();
+}
+/* Sürükleme performansı: hareket olayları sadece konumu kaydeder, çizim kare başına bir kez yapılır */
+let px = 0, py = 0, dragRaf = 0;
+function applyDrag(){
+  dragRaf = 0;
+  if (!drag) return;
+  drag.ghost.style.transform = "translate(" + (px - drag.w / 2) + "px," + (py - drag.w / 2) + "px)";
+  const o = inBag(px, py);
+  if (o !== drag.over){ drag.over = o; $("bagBox").classList.toggle("over", o); }
+}
+function moveDrag(x, y){
+  if (!drag) return;
+  px = x; py = y;
+  if (!dragRaf) dragRaf = requestAnimationFrame(applyDrag);
+}
+function endDrag(x, y, cancel){
+  if (!drag) return;
+  const d = drag; drag = null;
+  d.ghost.remove(); d.el.classList.remove("dragging"); $("bagBox").classList.remove("over");
+  if (cancel) return;
+  if (inBag(x, y)) pickItem(d.it, d.el);
+  else say(g1, "Eşyayı çantanın üstüne bırakmalısın. Tekrar dene! 🎒", "happy");
+}
+function makeDraggable(el, it){
+  el.addEventListener("contextmenu", e => e.preventDefault());
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); pickItem(it, el); } });
+  /* fare */
+  el.addEventListener("mousedown", e => {
+    if (e.button !== 0 || el.dataset.used) return;
+    e.preventDefault();
+    const sx = e.clientX, sy = e.clientY;
+    const mm = ev => {
+      if (!drag && Math.hypot(ev.clientX - sx, ev.clientY - sy) > 5) startDrag(el, it, ev.clientX, ev.clientY);
+      if (drag) moveDrag(ev.clientX, ev.clientY);
+    };
+    const mu = ev => {
+      window.removeEventListener("mousemove", mm); window.removeEventListener("mouseup", mu);
+      if (drag) endDrag(ev.clientX, ev.clientY); else pickItem(it, el);
+    };
+    window.addEventListener("mousemove", mm); window.addEventListener("mouseup", mu);
+  });
+  /* dokunmatik: kısa dokunma = çantaya at, basılı tutup sürükleme = sürükle-bırak, kaydırma = sayfayı kaydır */
+  let timer = null, sx = 0, sy = 0, scrolled = false, last = [0, 0];
+  el.addEventListener("touchstart", e => {
+    if (el.dataset.used) return;
+    const t = e.touches[0]; sx = t.clientX; sy = t.clientY; scrolled = false; last = [sx, sy];
+    clearTimeout(timer);
+    timer = setTimeout(() => { if (!scrolled) startDrag(el, it, sx, sy); }, 180);
+  }, {passive: true});
+  el.addEventListener("touchmove", e => {
+    const t = e.touches[0]; last = [t.clientX, t.clientY];
+    if (drag && drag.el === el){ if (e.cancelable) e.preventDefault(); moveDrag(t.clientX, t.clientY); return; }
+    if (Math.hypot(t.clientX - sx, t.clientY - sy) > 10){ scrolled = true; clearTimeout(timer); }
+  }, {passive: false});
+  el.addEventListener("touchend", e => {
+    clearTimeout(timer);
+    if (e.cancelable) e.preventDefault();
+    if (drag && drag.el === el) endDrag(last[0], last[1]);
+    else if (!scrolled && !el.dataset.used) pickItem(it, el);
+  }, {passive: false});
+  el.addEventListener("touchcancel", () => { clearTimeout(timer); if (drag && drag.el === el) endDrag(0, 0, true); });
+}
+$("bagReset").addEventListener("click", renderItems);
+renderItems();
+
+/* ================= SIRALAMA OYUNU MOTORU (deprem + yangın) ================= */
+function orderGame(cfg){
+  let active = false, idx = 0;
+  function render(){
+    cfg.box.innerHTML = "";
+    const all = [...cfg.steps.map(s => ({...s, kind:"step"})), ...cfg.decoys.map(d => ({...d, kind:"decoy"}))];
+    shuffle(all).forEach(a => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "btn alt"; b.disabled = true; b.innerHTML = a.label;
+      b.addEventListener("click", () => choose(a, b));
+      cfg.box.appendChild(b);
+    });
+  }
+  function shake(b){ b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
+  function setAll(disabled){ cfg.box.querySelectorAll("button:not(.done)").forEach(b => b.disabled = disabled); }
+  function choose(a, b){
+    if (!active) return;
+    if (a.kind === "decoy"){
+      shake(b);
+      say(cfg.guide, "❌ <b>" + a.name + ":</b> " + a.why, "oops");
+      return;
+    }
+    const want = cfg.steps[idx];
+    if (a.key === want.key){
+      b.classList.add("done"); b.disabled = true;
+      idx++;
+      cfg.onStep && cfg.onStep(a, idx);
+      if (idx === cfg.steps.length){
+        active = false; setAll(true);
+        cfg.onFinish && cfg.onFinish();
+        say(cfg.guide, "🎉 <b>Başardın!</b> " + a.ok + " " + cfg.finishMsg, "cheer");
+      } else {
+        say(cfg.guide, "✅ <b>" + a.name + ":</b> " + a.ok + " Sıradaki adım ne?", "happy");
+      }
+    } else {
+      shake(b);
+      say(cfg.guide, "⏳ <b>Doğru bir adım ama sırası şimdi değil.</b> " + want.hint, "oops");
+    }
+  }
+  function start(){
+    active = true; idx = 0; render(); setAll(false);
+    cfg.start.disabled = true;
+    cfg.onStart && cfg.onStart();
+    say(cfg.guide, cfg.startMsg, "scared");
+  }
+  function reset(){
+    active = false; idx = 0; render();
+    cfg.start.disabled = false;
+    cfg.onReset && cfg.onReset();
+    say(cfg.guide, cfg.intro, "happy");
+  }
+  cfg.start.addEventListener("click", start);
+  cfg.reset.addEventListener("click", reset);
+  reset();
+}
+
+/* ================= OYUN 2: DEPREM ================= */
+function setPose(p){ $("figure").setAttribute("data-pose", p); }
+orderGame({
+  guide: $("guide2"), box: $("qBox"), start: $("qStart"), reset: $("qReset"),
+  intro: "Merhaba! Deprem anında ne yapmalıyız, birlikte deneyelim. Hazır olunca <b>Depremi başlat</b>'a bas. Ben biraz korkacağım ama sen bana yol göster!",
+  startMsg: "<b>Aaa! Deprem oluyor!</b> Çok korktum, ne yapmalıyım? Doğru hareketleri doğru sırayla seç. Bazı butonlar tuzak olabilir!",
+  finishMsg: "Sarsıntı bitene kadar bu şekilde bekle. Sarsıntı bitince asansörü kullanma, merdivenle sakince dışarı çık ve toplanma alanına git. Sen olmasan ben bunu yapamazdım, teşekkürler!",
+  steps: [
+    {key:"cok",   pose:"crouch", label:"⬇️ ÇÖK",   name:"Çök", ok:"Dizlerinin üzerine çömelip kendini küçülttün; sarsıntıda düşme riskin azaldı.", hint:"Önce olduğun yerde dizlerinin üzerine çökmeliyiz ki sarsıntıda düşmeyelim."},
+    {key:"kapan", pose:"cover",  label:"🛡️ KAPAN", name:"Kapan", ok:"Başını ve ensesini koruyacak şekilde kapandın. Sağlam bir masanın yanına ya da altına geçmek de iyidir.", hint:"Sıra kafamızı korumakta: başımızı ve ensemizi elle, yastıkla ya da sağlam bir masayla koruyalım."},
+    {key:"tutun", pose:"hold",   label:"✊ TUTUN", name:"Tutun", ok:"Sabit bir yere (masa bacağı gibi) tutundun; sarsıntıda savrulmazsın.", hint:"Son olarak sabit bir yere, mesela masa bacağına tutunmalıyız ki savrulmayalım."}
+  ],
+  decoys: [
+    {label:"🏃 Dışarı koş", name:"Dışarı koşmak", why:"AFAD, sarsıntı sırasında merdivenlere ya da çıkışlara doğru koşulmamasını söylüyor. Koşarken düşebilir, üzerine eşya düşebilir. Sarsıntı bitene kadar olduğun yerde kal."},
+    {label:"🪟 Balkona çık", name:"Balkona çıkmak", why:"Balkona çıkmak ya da pencereden atlamak çok tehlikeli. AFAD'a göre cam ve pencerelerden uzak durulmalı."}
+  ],
+  onStart(){ setPose("stand"); $("stage").classList.add("quake"); $("banner").hidden = false; },
+  onStep(a){ setPose(a.pose); },
+  onFinish(){ $("stage").classList.remove("quake"); $("banner").hidden = true; },
+  onReset(){ setPose("stand"); $("stage").classList.remove("quake"); $("banner").hidden = true; }
+});
+
+/* ================= OYUN 3: YANGIN ================= */
+const runnerPos = [30, 42, 56, 70, 76];
+orderGame({
+  guide: $("guide3"), box: $("fBox"), start: $("fStart"), reset: $("fReset"),
+  intro: "Yangınlar çok hızlı yayılabilir, o yüzden ne yapacağımızı önceden bilmeliyiz. <b>Yangını başlat</b>'a bas, doğru adımları sırayla seç!",
+  startMsg: "<b>Yangın var!</b> Panik yapmadan düşünelim. Doğru adımları sırayla seç, tuzaklara dikkat!",
+  finishMsg: "İtfaiye geldi! Unutma: yangında vakit çok değerli, eşya için geri dönme.",
+  steps: [
+    {key:"uyar",  label:"📣 Alarmı çal, çevrendekileri uyar", name:"Uyarı vermek", ok:"Herkesin haberi olması, tahliyeyi hızlandırır.", hint:"Önce herkesin haberi olsun: alarmı çalıp çevrendekileri uyar."},
+    {key:"alcak", label:"🧎 Alçaktan ilerle, ağzını burnunu kapat", name:"Alçaktan ilerlemek", ok:"Sıcak duman yukarıda toplanır, yere yakın yerde daha temiz hava bulunur. Mümkünse ağız ve burnunu ıslak bir bezle kapat.", hint:"Ortam dumanlıysa sıradaki adım: alçaktan ilerleyip ağız ve burnunu korumak."},
+    {key:"cik",   label:"🚪 Kapıları kapat, merdivenle çık", name:"Kapatıp merdivenle çıkmak", ok:"Kapıları arkandan kapatmak, yangının ve dumanın yayılmasını yavaşlatır.", hint:"Şimdi güvenli şekilde binadan çıkma zamanı: kapıları kapat ve merdivenle in."},
+    {key:"ara",   label:"📞 Dışarıda 112'yi ara, toplanma alanına git", name:"112'yi aramak", ok:"Dışarı çıkınca 112'yi arayıp toplanma alanında beklemek en güvenlisi.", hint:"Güvenli yere çıktın; şimdi 112'yi ara ve toplanma alanına git."}
+  ],
+  decoys: [
+    {label:"🛗 Asansöre bin", name:"Asansöre binmek", why:"Yangında elektrik kesilebilir ve asansörde mahsur kalabilirsin. Duman da asansör boşluğuna dolabilir. Her zaman merdiven kullan."},
+    {label:"🎒 Eşyaları topla", name:"Eşya toplamak", why:"Dumanda her saniye değerli. Eşyalar yerine canını düşün, hemen çık."},
+    {label:"🛏️ Yatağın altına saklan", name:"Saklanmak", why:"Saklanırsan seni bulmak zorlaşır. Kaçış yoluna yönelmek gerekir."}
+  ],
+  onStart(){ $("fireScene").classList.remove("done"); $("fireScene").classList.add("on"); $("fsRunner").style.setProperty("--x", runnerPos[0]); },
+  onStep(a, n){ $("fsRunner").style.setProperty("--x", runnerPos[n]); },
+  onFinish(){ $("fireScene").classList.add("done"); },
+  onReset(){ $("fireScene").classList.remove("on","done"); $("fsRunner").style.setProperty("--x", runnerPos[0]); }
+});
+
+/* ================= OYUN 4: SEL ================= */
+const FLOOD = [
+  {em:"🚶", t:"Sel suyunun içinden yürüyerek karşıya geçmeye çalışmak", safe:false, why:"Sel suyu göründüğünden çok daha güçlüdür; seni ayağından kaldırıp sürükleyebilir. Suya girme."},
+  {em:"⛰️", t:"Sel tehlikesinde bölgeyi terk edip yüksek ve güvenli bir yere gitmek", safe:true, why:"AFAD tam olarak bunu öneriyor: bölgeyi hemen terk et, yüksek ve güvenli yerlere git."},
+  {em:"🚗", t:"Suyla kaplı yoldan arabayla geçmeye çalışmak", safe:false, why:"AFAD, suyla kaplı yoldan gitmeye çalışmamayı söylüyor. Araç arızalanırsa hemen terk edip yüksek bir yere çıkmak gerekir."},
+  {em:"🔌", t:"Sel sırasında elektrik kaynaklarından uzak durmak", safe:true, why:"Su ve elektrik birleşince çok tehlikeli olur. AFAD elektrik kaynaklarından uzak durulmasını söylüyor."},
+  {em:"🏠", t:"“Geri dönün” uyarısı gelmeden eve dönmek", safe:false, why:"AFAD, geri dönün uyarısı alınmadan evlere dönülmemesini söylüyor. Tehlike hâlâ sürüyor olabilir."},
+  {em:"🥫", t:"Sel sırasında evde kalmış yiyecekleri (konserveler dahil) kullanmak", safe:false, why:"AFAD, sel sırasında evde kalan yiyeceklerin konserveler dahil kullanılmamasını söylüyor. Sel suyuyla bulaşmış olabilirler."},
+  {em:"🏞️", t:"Sel yataklarına ve dere kenarlarına yerleşmemek", safe:true, why:"Doğru! AFAD, sel yataklarına yerleşmemeye özen gösterilmesini öneriyor."},
+  {em:"📻", t:"Acil durum uyarılarını ve resmî duyuruları takip etmek", safe:true, why:"Doğru! Güncel ve güvenilir bilgi, doğru karar vermeni sağlar."}
+];
+const g4 = $("guide4");
+let fOrder, fi, fScore;
+function floodStart(){
+  fOrder = shuffle([...FLOOD]); fi = 0; fScore = 0;
+  say(g4, "Hazır mısın? Kartlardaki davranışın güvenli mi tehlikeli mi olduğuna karar ver. Ben de nedenini anlatırım!", "happy");
+  floodCard();
+}
+function floodCard(){
+  const c = fOrder[fi];
+  $("floodBox").innerHTML = '<div class="em">' + c.em + '</div><p>' + c.t + '</p>' +
+    '<div class="row"><button class="btn safe" id="fSafe" type="button">✅ Güvenli</button><button class="btn danger" id="fDanger" type="button">⚠️ Tehlikeli</button></div>' +
+    '<div class="s-meta"><span>Kart ' + (fi + 1) + ' / ' + fOrder.length + '</span><span>Puan: ' + fScore + '</span></div>';
+  $("fSafe").addEventListener("click", () => floodAnswer(true));
+  $("fDanger").addEventListener("click", () => floodAnswer(false));
+}
+function floodAnswer(ans){
+  const c = fOrder[fi];
+  const right = ans === c.safe;
+  if (right) fScore++;
+  say(g4, (right ? "✅ <b>Doğru!</b> " : "❌ <b>Olmadı.</b> ") + (c.safe ? "Bu davranış güvenli. " : "Bu davranış tehlikeli. ") + c.why, right ? "cheer" : "oops");
+  const isLast = fi === fOrder.length - 1;
+  $("floodBox").innerHTML = '<div class="em">' + c.em + '</div><p>' + c.t + '</p>' +
+    '<div class="row"><button class="btn" id="fNext" type="button">' + (isLast ? "Sonucu gör 🏁" : "Sonraki kart ➡️") + '</button></div>' +
+    '<div class="s-meta"><span>Kart ' + (fi + 1) + ' / ' + fOrder.length + '</span><span>Puan: ' + fScore + '</span></div>';
+  $("fNext").addEventListener("click", () => {
+    if (isLast) floodEnd(); else { fi++; floodCard(); }
+  });
+}
+function floodEnd(){
+  const all = fScore === fOrder.length;
+  $("floodBox").innerHTML = '<div class="em">' + (all ? "🏆" : "🌊") + '</div><p>' + fScore + ' / ' + fOrder.length + ' doğru</p>' +
+    '<div class="row"><button class="btn alt" id="fAgain" type="button">Tekrar oyna</button></div>';
+  $("fAgain").addEventListener("click", floodStart);
+  say(g4, all ? "🎉 <b>Mükemmel!</b> Hepsini bildin. Selde en önemli kural: suya girme, yüksek ve güvenli bir yere git." : "İyi iş çıkardın! Unutma: sel anında yüksek ve güvenli yere git, suya girme, elektrikten uzak dur. İstersen tekrar oynayıp daha da iyi yapabilirsin.", all ? "cheer" : "happy");
+}
+floodStart();
+
+/* Adım adım "bu mu şu mu" oyun motoru (çığ): her adımda 1 doğru + 1 tuzak seçenek */
+function choiceGame(cfg){
+  let active = false, idx = 0;
+  function shake(b){ b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
+  function showStep(){
+    const s = cfg.steps[idx];
+    const opts = shuffle([{label: s.label, right: true}, {label: s.decoy.label, right: false}]);
+    cfg.box.innerHTML = '<div class="qa"><div class="qa-meta">Adım ' + (idx + 1) + ' / ' + cfg.steps.length + '</div>' +
+      '<p class="qa-q">' + s.q + '</p><div class="qa-opts"></div></div>';
+    const wrap = cfg.box.querySelector(".qa-opts");
+    opts.forEach(o => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "btn alt"; b.innerHTML = o.label;
+      b.addEventListener("click", () => choose(s, o, b));
+      wrap.appendChild(b);
+    });
+  }
+  function choose(s, o, b){
+    if (!active) return;
+    if (!o.right){
+      shake(b); b.disabled = true;
+      say(cfg.guide, "❌ <b>" + s.decoy.name + ":</b> " + s.decoy.why + " Diğer seçeneği dene!", "oops");
+      return;
+    }
+    idx++;
+    cfg.onStep && cfg.onStep(s, idx);
+    if (idx === cfg.steps.length){
+      active = false;
+      cfg.box.innerHTML = '<div class="qa"><p class="qa-q" style="margin:0">🎉 Tüm adımları doğru yaptın!</p></div>';
+      cfg.onFinish && cfg.onFinish();
+      say(cfg.guide, "🎉 <b>Başardın!</b> " + s.ok + " " + cfg.finishMsg, "cheer");
+    } else {
+      say(cfg.guide, "✅ <b>" + s.name + ":</b> " + s.ok + " Sıradaki soruya geçelim!", "happy");
+      showStep();
+    }
+  }
+  function start(){
+    active = true; idx = 0; showStep();
+    cfg.start.disabled = true;
+    cfg.onStart && cfg.onStart();
+    say(cfg.guide, cfg.startMsg, "scared");
+  }
+  function reset(){
+    active = false; idx = 0; cfg.box.innerHTML = "";
+    cfg.start.disabled = false;
+    cfg.onReset && cfg.onReset();
+    say(cfg.guide, cfg.intro, "happy");
+  }
+  cfg.start.addEventListener("click", start);
+  cfg.reset.addEventListener("click", reset);
+  reset();
+}
+
+/* ================= OYUN 5: ÇIĞ ================= */
+$("avRunner").innerHTML = $("fsRunner").innerHTML;
+const avPos = [48, 56, 62, 68, 74, 78];
+choiceGame({
+  guide: $("guide6"), box: $("aBox"), start: $("aStart"), reset: $("aReset"),
+  intro: "Çığ, dağlık ve karlı bölgelerde çok hızlı ve tehlikeli olabilir. En önemli kural: çığ riski olan yamaçlardan uzak dur, Meteoroloji ve AFAD uyarılarını takip et. Yine de çığa yakalanırsan ne yapacağını bilmen çok değerli. <b>Çığı başlat</b>'a bas, her adımda iki seçenekten doğru olanı seç!",
+  startMsg: "<b>Çığ geliyor!</b> Panik yapmadan düşünelim. Her adımda iki seçenek göreceksin, doğru olanı seç!",
+  finishMsg: "Kurtarma ekipleri geldi. Çığdan sonra en kısa sürede 112'yi, jandarmayı (156) ya da Alo Valilik'i (179) aramak gerekir. Unutma: çığ riski olan yerlere hiç girmemek en iyi korunmadır!",
+  steps: [
+    {q:"Çığ geliyor! İlk olarak ne yaparsın?",
+     label:"📣 Bağır ya da düdük çal, çığın en dış ve yavaş kenarına doğru kaç",
+     name:"Uyarmak ve kenara kaçmak",
+     ok:"Çevrendekileri bağırarak ya da düdükle uyardın. Çığın ortası hızlı ve yüksektir, en dış kenarlar ise daha yavaş ve alçaktır. Oraya ulaşırsan sürüklenme ihtimalin azalır.",
+     decoy:{label:"⛷️ Çığın tam önünden, düz aşağı kaç", name:"Çığın önünde kaçmak", why:"Çığ çoğu zaman senden çok daha hızlıdır. Bunun yerine çığın en dış kenarına, yani daha yavaş ve alçak olan yere doğru git."}},
+    {q:"Kenara ulaşamıyorsun, çığ yetişiyor. Ne yaparsın?",
+     label:"🌲 Sabit bir ağaca ya da büyük bir kayaya tutun",
+     name:"Tutunmak",
+     ok:"Sabit bir ağaç ya da kaya seni sürüklenmekten korur.",
+     decoy:{label:"🪵 Çığla sürüklenen kırık ağaç parçalarına tutun", name:"Kırık parçalara tutunmak", why:"Kırılmış ağaç ve kaya parçaları çığla birlikte hareket eder ve seni yaralayabilir. Onlardan uzak dur, sadece sabit bir ağaca ya da kayaya tutun."}},
+    {q:"Çığ seni yakaladı ve sürüklüyor. Ne yaparsın?",
+     label:"🏊 Yüzme hareketi yap, karın üstünde kalmaya çalış",
+     name:"Yüzme hareketi",
+     ok:"Yüzme hareketiyle akan karın üstünde kalmaya çalışırsın. Yüzeyde kalmak, kar altında kalma riskini azaltır.",
+     decoy:{label:"🧍 Hiç hareket etme, bekle", name:"Hiç hareket etmemek", why:"Çığ akarken yüzme hareketi yaparak karın üstünde kalmaya çalışmak gerekir. Hareketsiz kalırsan kar altında kalma riskin artar."}},
+    {q:"Çığ yavaşlıyor, durmak üzere. Ne yaparsın?",
+     label:"🤲 Elini yüzünün önüne koy, nefes boşluğu aç, ağzını kapalı tut",
+     name:"Hava boşluğu açmak",
+     ok:"Bir elini ağız ve burnunun önüne koyup nefes alabileceğin bir boşluk oluşturdun. Ağzını sıkıca kapalı tutmak da kar yutmandan korur.",
+     decoy:{label:"😮 Ağzını aç ve çığlık at", name:"Ağzını açmak", why:"Ağzını sıkıca kapalı tutmalısın, yoksa ağzına kar dolar ve nefes almak zorlaşır."}},
+    {q:"Çığ durdu. Yüzeye yakın olduğunu hissediyorsun. Ne yaparsın?",
+     label:"📢 Bağır ve bir elini yüzeye doğru uzat",
+     name:"Sesini duyurmak",
+     ok:"Karın altında ses çok az iletilir, ama yüzeye yakınsan bağırman ve elini yüzeye uzatman seni bulmalarını kolaylaştırır.",
+     decoy:{label:"🤫 Sessizce bekle, ekipler zaten bulur", name:"Sessizce beklemek", why:"Kar altında her saniye değerlidir. Yüzeye yakınsan bağırmak ve elini uzatmak seni bulmalarını kolaylaştırır. Çok derindeysen sakin kalıp nefesini idareli kullanmaya çalış."}}
+  ],
+  onStart(){ $("avScene").classList.remove("done"); $("avScene").classList.add("on"); $("avRunner").style.setProperty("--x", avPos[0]); },
+  onStep(a, n){ $("avRunner").style.setProperty("--x", avPos[n]); },
+  onFinish(){ $("avScene").classList.add("done"); },
+  onReset(){ $("avScene").classList.remove("on","done"); $("avRunner").style.setProperty("--x", avPos[0]); }
+});
+
+/* ================= TEST ================= */
+const QUIZ = [
+  {q:"Evinin ve okulunun en yakın acil toplanma alanını biliyor musun?",
+   o:[["Evet, ikisini de biliyorum",2],["Birini biliyorum",1],["Hayır",0]],
+   tip:"Evinin ve okulunun yakınındaki acil toplanma alanlarının yerini internetten öğrenebilirsin. AFAD bunu önceden öğrenmeyi öneriyor."},
+  {q:"Afet çantan hazır mı?",
+   o:[["Hazır ve içindekiler güncel",2],["Var ama eksik",1],["Yok",0]],
+   tip:"Çanta oyununa geri dön. AFAD'a göre çanta çıkışa yakın, kolay ulaşılır bir yerde durmalı ve altı ayda bir kontrol edilmeli."},
+  {q:"Deprem anında Çök-Kapan-Tutun adımlarını sırasıyla söyleyebilir misin?",
+   o:[["Evet, kolayca",2],["Biraz karıştırırım",1],["Hayır",0]],
+   tip:"Deprem oyununu birkaç kez oyna. AFAD, ailecek çök-kapan-tutun tatbikatı yapmayı öneriyor."},
+  {q:"Evinde elektrik şalterinin, doğalgaz ve su vanasının yerini biliyor musun?",
+   o:[["Üçünü de biliyorum",2],["Bir ikisini biliyorum",1],["Hiçbirini bilmiyorum",0]],
+   tip:"Evdeki elektrik, doğalgaz ve su kapatma noktalarını ailenle birlikte bul ve nasıl kapatılacağını öğren."},
+  {q:"Ailenle afet sonrası buluşma yeri ve haberleşme planı yaptınız mı?",
+   o:[["Evet, konuştuk",2],["Biraz konuştuk, net değil",1],["Hayır",0]],
+   tip:"Ailece bir buluşma noktası ve yedek bir iletişim planı belirleyin. Aile afet planı hazırlamak AFAD'ın da önerisidir."},
+  {q:"Evindeki ağır ve devrilebilecek eşyalar (dolap, kitaplık, buzdolabı gibi) sabitli mi?",
+   o:[["Evet, sabit",2],["Bir kısmı sabit",1],["Hayır",0]],
+   tip:"Dolap, kitaplık, buzdolabı, su ısıtıcısı gibi eşyaların duvara ya da yere sabitlenmesi için ailenle konuş."},
+  {q:"112 acil çağrı numarasını ve yakınlarının numaralarını biliyor musun?",
+   o:[["Evet, biliyorum ya da kağıtta var",2],["Sadece 112'yi biliyorum",1],["Hayır",0]],
+   tip:"Telefonun şarjı bitebilir. Yakınlarının numaralarını bir kağıda yazıp çantana koy. AFAD Acil Çağrı uygulamasına da göz atabilirsin."},
+  {q:"Son bir yıl içinde bir afet ya da tahliye tatbikatına katıldın mı?",
+   o:[["Evet",2],["Çok önce katıldım",1],["Hiç katılmadım",0]],
+   tip:"Okul ve kulüp tatbikatlarına katıl. Doğru davranışlar sık pratikle refleks haline gelir."},
+  {q:"Basit ilk yardım (kanamayı durdurma gibi) bilgin var mı?",
+   o:[["Evet, eğitim aldım",2],["Biraz biliyorum",1],["Hayır",0]],
+   tip:"Küçük yaralanmalarda ilk yardım bilgisi çok işe yarar. Kızılay gibi kurumların ilk yardım eğitimlerini araştır."},
+  {q:"Yaşadığın binanın depreme dayanıklılığı hakkında bilgin var mı?",
+   o:[["Evet, araştırdım ya da öğrendim",2],["Az çok fikrim var",1],["Hiç bilmiyorum",0]],
+   tip:"AFAD, binanın dayanıklılığını kontrol ettirmeyi ve zorunlu deprem sigortasını yaptırmayı öneriyor. Ailenle konuş."},
+  {q:"Evinde ve okulunda yangın çıkış yollarını ve merdivenlerin yerini biliyor musun?",
+   o:[["Evet, ikisini de biliyorum",2],["Birini biliyorum",1],["Hayır",0]],
+   tip:"Yangın oyununu tekrar oyna ve evindeki ve okulundaki çıkış yollarını öğren. Yangında asansör kullanılmaz."},
+  {q:"Yaşadığın bölgenin hangi afet risklerini taşıdığını (deprem, sel, heyelan, çığ gibi) biliyor musun?",
+   o:[["Evet, biliyorum",2],["Kısmen biliyorum",1],["Hayır",0]],
+   tip:"AFAD, bölgenin taşıdığı afet risklerini öğrenmeyi öneriyor. Sel ve çığ oyunlarını da tekrar oynayabilirsin."},
+  {q:"AFAD Gönüllülük Sistemi'ne (afet gönüllüsü olarak) üye misin?",
+   o:[["Evet, üyeyim",2],["Bilgi aldım ama henüz üye değilim",1],["Hayır, hiç bilmiyordum",0]],
+   tip:"AFAD, afetlerde gönüllü olmak isteyenler için bir gönüllülük sistemi işletiyor. Başvuru şartları (yaş sınırı gibi) değişebildiği için güncel bilgiyi afad.gov.tr adresinden kontrol et. Kulüp olarak birlikte araştırıp başvurmayı da düşünebilirsiniz."}
+];
+$("qCount").textContent = QUIZ.length;
+const maxScore = QUIZ.length * 2;
+const g5 = $("guide5");
+let qi = 0, score = 0, missed = [];
+
+function renderQuestion(){
+  const cur = QUIZ[qi];
+  $("quizBox").innerHTML = '<div class="progress"><i style="width:' + (qi / QUIZ.length * 100) + '%"></i></div>' +
+    '<p class="q-text">' + (qi + 1) + '/' + QUIZ.length + ' · ' + cur.q + '</p><div class="opts"></div>';
+  const opts = $("quizBox").querySelector(".opts");
+  cur.o.forEach(([text, pts]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.textContent = text;
+    b.addEventListener("click", () => {
+      score += pts;
+      if (pts < 2) missed.push(cur.tip);
+      qi++;
+      qi < QUIZ.length ? renderQuestion() : renderResult();
+    });
+    opts.appendChild(b);
+  });
+}
+function renderResult(){
+  const ratio = score / maxScore;
+  let level, emoji, text, mood;
+  if (ratio <= 0.4){ level = "Yeni Başlayan"; emoji = "🌱"; text = "Başlangıç noktasındasın ve bu çok normal! Aşağıdaki önerilerle hızlıca yol alabilirsin."; mood = "happy"; }
+  else if (ratio <= 0.8){ level = "Yoldasın"; emoji = "🚀"; text = "Güzel bir temelin var. Birkaç eksiği tamamlayınca çok daha güvende olursun."; mood = "happy"; }
+  else { level = "Afete Hazır"; emoji = "🏅"; text = "Harikasın! Bildiklerini ailene ve arkadaşlarına da anlatarak herkesi hazırlayabilirsin."; mood = "cheer"; }
+  const tips = missed.length
+    ? '<p><strong>Gelişmen için öneriler:</strong></p><ul class="tips">' + missed.map(t => "<li>" + t + "</li>").join("") + "</ul>"
+    : "";
+  $("quizBox").innerHTML = '<div class="result"><div class="progress"><i style="width:100%"></i></div>' +
+    '<div style="font-size:3.4rem">' + emoji + '</div><div class="score">' + score + ' / ' + maxScore + '</div>' +
+    '<div class="level">' + level + '</div><p>' + text + '</p>' + tips +
+    '<button class="btn" id="quizAgain" type="button">Testi tekrar çöz</button></div>';
+  $("quizAgain").addEventListener("click", startQuiz);
+  say(g5, mood === "cheer" ? "🎉 Çok iyisin! Seninle gurur duydum. Şimdi bildiklerini etrafındakilere de öğret!" : "Test bitti, tebrikler! Eksik kalan yerler için önerileri yukarıda yazdım. Adım adım hazırlanmak yeterli, bu yola çıkman bile çok değerli. 💪", mood);
+}
+function startQuiz(){
+  qi = 0; score = 0; missed = [];
+  say(g5, "Şimdi sıra sende! Doğru ya da yanlış cevap yok, sadece dürüst ol. Sonunda seni nasıl geliştirebileceğimizi birlikte göreceğiz.", "happy");
+  renderQuestion();
+}
+startQuiz();
+</script>
+</body>
+</html>
